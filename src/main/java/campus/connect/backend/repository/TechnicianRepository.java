@@ -1,5 +1,16 @@
 package campus.connect.backend.repository;
 
-public class TechnicianRepository {
+import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import campus.connect.backend.domain.Technician;
+
+@Repository 
+public interface TechnicianRepository extends JpaRepository<Technician,UUID> {
+
     
 }
+    
+

@@ -1,5 +1,14 @@
 package campus.connect.backend.repository;
 
-public class BuildingRepository {
+import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import campus.connect.backend.domain.Building;
+
+@Repository 
+public interface BuildingRepository extends JpaRepository<Building, UUID> {
+
     
 }
