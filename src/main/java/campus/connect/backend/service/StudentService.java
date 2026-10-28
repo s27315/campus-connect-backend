@@ -62,6 +62,13 @@ public class StudentService {
         
         }
 
+        public List<Student> student(String lastName){
+            List<Student> stud = studentRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+            return stud;
+        }
+
+        
+
 
 
 

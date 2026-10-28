@@ -1,8 +1,7 @@
 package campus.connect.backend.domain;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
+
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
@@ -41,7 +40,7 @@ public class WifiReport {
 
     @ManyToOne
     @JoinColumn (name = "technician_id")
-    private Technician technicians;
+    private Technician technician;
 
 
     public UUID getId() {
@@ -86,11 +85,12 @@ public class WifiReport {
         this.students = students;
     }
 
-    public Technician geTechnicians(){
-        return technicians;
+    public Technician getTechnician(){
+        return technician;
     }
-    public void setTechnicians(Technician technicians){
-        this.technicians = technicians;
+
+    public void setTechnician(Technician technicians){
+        this.technician = technicians;
     }
 
 

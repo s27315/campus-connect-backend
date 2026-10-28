@@ -3,16 +3,14 @@ package campus.connect.backend.domain;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import campus.connect.backend.domain.Technician;
-
-
-
 
 
 @Entity
@@ -27,6 +25,7 @@ public class IssueType {
     private String name;
 
     @ManyToMany(mappedBy ="issueTypes" )
+    @JsonIgnore 
     private List<Technician> technicians;
     
     public UUID getId() {

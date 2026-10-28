@@ -10,14 +10,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Column;
+
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import campus.connect.backend.domain.WifiReport;
-import campus.connect.backend.domain.IssueType;
 
-import campus.connect.backend.domain.Building;
+
+
+
 
 @Entity
 @Table(name = "technician")
@@ -36,18 +36,15 @@ public class Technician {
 
     @ManyToOne
     @JoinColumn(name = "building_id")
-    private Building buildings;
+    private Building building;
 
     @ManyToMany
     @JoinTable(name = "technician_issue_type", 
     joinColumns = @JoinColumn (name = "issue_type_id"),
     inverseJoinColumns =@JoinColumn (name = "technician_id") 
     )
-    
     private List<IssueType> issueTypes;
 
-    @OneToMany(mappedBy = "technicians")
-    private List<WifiReport> wifiReports;
 
     public UUID getId() {
         return id;
@@ -78,10 +75,10 @@ public class Technician {
     }
     
     public Building getBuilding(){
-        return buildings;
+        return building;
     }
     public void setBuilding(Building buildings){
-        this.buildings = buildings;
+        this.building = buildings;
     }
     
     public List<IssueType> getIssueTypes(){
@@ -91,10 +88,5 @@ public class Technician {
         this.issueTypes = issueTypes;
     }
     
-    public List<WifiReport> getWifiReports(){
-        return wifiReports;
-    }
-    public void setWifiReports(List<WifiReport> wifiReports){
-        this.wifiReports = wifiReports;
-    }
+    
 }

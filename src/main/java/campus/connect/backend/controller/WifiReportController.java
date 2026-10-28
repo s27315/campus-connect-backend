@@ -1,5 +1,6 @@
 package campus.connect.backend.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,12 +15,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import campus.connect.backend.domain.ReportStatus;
+
 import campus.connect.backend.domain.WifiReport;
 import campus.connect.backend.service.WifiReportService;
 
 @RestController 
-@RequestMapping (value = "/api/wifiReports")
+@RequestMapping (value = "/api/wifi-reports")
 public class WifiReportController {
     @Autowired 
     private WifiReportService wifiReportService;
@@ -44,5 +49,15 @@ public class WifiReportController {
       public ResponseEntity<?> updateWifiReports(@PathVariable UUID id, @RequestBody WifiReport wifiReport){
         String result = wifiReportService.updateWifiReports(id, wifiReport);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    @GetMapping (value = "/by-status", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findWifiReport(@RequestParam ("status") ReportStatus status ){
+        List<WifiReport> wifiReports = wifiReportService.wifiReports(status);
+        return new ResponseEntity<>(wifiReports, HttpStatus.OK);
+    }
+     @GetMapping (value = "/between", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findWifiRe(@RequestParam ("start") LocalDate start,@RequestParam ("end") LocalDate end ){
+        List<WifiReport> wifiRepor = wifiReportService.wifiRepo(start,end);
+        return new ResponseEntity<>(wifiRepor, HttpStatus.OK);
     }
 }

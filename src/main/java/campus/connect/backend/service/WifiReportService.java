@@ -1,11 +1,14 @@
 package campus.connect.backend.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import campus.connect.backend.domain.ReportStatus;
 import campus.connect.backend.domain.WifiReport;
 import campus.connect.backend.repository.WifiReportRepository;
 
@@ -51,5 +54,15 @@ public class WifiReportService {
             return "data updated successfully";
             }
         
+        }
+
+        public List<WifiReport> wifiReports(ReportStatus status){
+            List<WifiReport> wifi = wifiReportRepository.findByStatusOrderByReportDateAsc(status);
+           return wifi;
+        }
+
+         public List<WifiReport> wifiRepo(LocalDate start,LocalDate end){
+            List<WifiReport> reports = wifiReportRepository.findByReportDateBetweenOrderByReportDateAsc(start,end);
+           return reports;
         }
 }
