@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import campus.connect.backend.domain.ReportStatus;
+import campus.connect.backend.domain.Technician;
 import campus.connect.backend.domain.WifiReport;
 
 @Repository 
@@ -16,4 +17,6 @@ public interface WifiReportRepository extends JpaRepository<WifiReport,UUID>   {
     List<WifiReport> findByStatusOrderByReportDateAsc(ReportStatus status);
 
      List<WifiReport> findByReportDateBetweenOrderByReportDateAsc(LocalDate start , LocalDate end);
+     boolean existsByTechnicianAndReportDateAndStatusNot(Technician tecn , LocalDate loc, ReportStatus status);
+     
 }

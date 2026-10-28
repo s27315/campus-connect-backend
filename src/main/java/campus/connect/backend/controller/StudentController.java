@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import campus.connect.backend.domain.Student;
 
-import campus.connect.backend.domain.WifiReport;
 import campus.connect.backend.service.StudentService;
 
 @RestController 

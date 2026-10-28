@@ -15,5 +15,6 @@ public interface BuildingRepository extends JpaRepository<Building, UUID> {
    @Query ( value = "SELECT b FROM Building b WHERE NOT EXISTS (SELECT t FROM Technician t WHERE t.building = b)ORDER BY b.buildingNumber")
    List<Building> findFreeBuildings(); 
 
+   Building findByBuildingNumber(int buildingNumber);
     
 }

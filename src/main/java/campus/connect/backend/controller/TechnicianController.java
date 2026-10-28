@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -60,6 +62,37 @@ public class TechnicianController {
         List<Technician> techn = technicianService.techn(name);
         return new ResponseEntity<>(techn, HttpStatus.OK);
     }
+    
+    @PutMapping  (value = "/{technicianId}/issue-types/{issueTypeId}" ,produces = MediaType.APPLICATION_JSON_VALUE )
+     public ResponseEntity<?> findTechnic(@PathVariable UUID technicianId,@PathVariable UUID issueTypeId ){
+        String tin= technicianService.tin(technicianId,issueTypeId);
+        if (tin.equals("The technician with that id does not exist")) {
+            return new ResponseEntity<>(tin, HttpStatus.valueOf(404));
+
+        } else if (tin.equals("That issue type does not exist")) {
+            return new ResponseEntity<>(tin, HttpStatus.valueOf(409));
+        } else {
+
+            return new ResponseEntity<>(tin, HttpStatus.OK);
+
+        }
+    }
+
+    @PatchMapping (value = "/{technnicianId}/building",produces = MediaType.APPLICATION_JSON_VALUE )
+     public ResponseEntity<?> findTech(@PathVariable UUID technnicianId,@Param ("buildingNumber" )int buildingNumber) {
+        String tn= technicianService.num(technnicianId,buildingNumber);
+        if (tn.equals("The technician with that id does not exist") || tn.equals("The building with that buildingNumber does not exist")) {
+            return new ResponseEntity<>(tn, HttpStatus.valueOf(404));
+
+        } else if (tn.equals("That building is taken by another technician")) {
+            return new ResponseEntity<>(tn, HttpStatus.valueOf(409));
+        } else {
+
+            return new ResponseEntity<>(tn, HttpStatus.OK);
+
+        }
+    }
+    
 
 
 }

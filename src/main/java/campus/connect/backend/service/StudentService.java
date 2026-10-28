@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import campus.connect.backend.domain.Student;
 import campus.connect.backend.domain.Technician;
-import campus.connect.backend.domain.WifiReport;
 import campus.connect.backend.repository.StudentRepository;
 
 @Service 

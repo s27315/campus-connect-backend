@@ -12,57 +12,98 @@ import campus.connect.backend.domain.ReportStatus;
 import campus.connect.backend.domain.WifiReport;
 import campus.connect.backend.repository.WifiReportRepository;
 
-@Service 
+@Service
 public class WifiReportService {
-    @Autowired 
+    @Autowired
     private WifiReportRepository wifiReportRepository;
 
-      public String savingWifiReports (WifiReport wifiReport){
-       wifiReportRepository.save(wifiReport);
-        return "data saved";
-     
+    public String savingWifiReports(WifiReport wifiReport) {
+        LocalDate nowLocalDate = LocalDate.now();
+        if (wifiReport.getReportDate().isBefore(nowLocalDate)) {
+            return "wifi report date cannot be in the past";
+        } else {
+
+            boolean nub = wifiReportRepository.existsByTechnicianAndReportDateAndStatusNot(wifiReport.getTechnician(),
+                    wifiReport.getReportDate(), ReportStatus.DISMISSED);
+
+            if (nub) {
+                return "technician already has a report assigned on that date ";
+            } else {
+
+                wifiReport.setStatus(ReportStatus.OPEN);
+
+                wifiReportRepository.save(wifiReport);
+
+                return "data saved";
+            }
+
+        }
+
     }
-     public List<WifiReport> displayWifiReports (){
+
+    public List<WifiReport> displayWifiReports() {
         List<WifiReport> data = wifiReportRepository.findAll();
         return data;
     }
-     public String deleteWifiReports (UUID id){
-    
-       Optional<WifiReport> result = wifiReportRepository.findById(id);
-       if (result.isEmpty()) {
-        return  "wifiReport with this id is not available";
-        
-       }else{
 
-        wifiReportRepository.deleteById(id);
-        return "data deleted";
-       }
+    public String deleteWifiReports(UUID id) {
+
+        Optional<WifiReport> result = wifiReportRepository.findById(id);
+        if (result.isEmpty()) {
+            return "wifiReport with this id is not available";
+
+        } else {
+
+            wifiReportRepository.deleteById(id);
+            return "data deleted";
+        }
     }
-    public String updateWifiReports (UUID id, WifiReport wifiReport){
-    
-        Optional<WifiReport> result =  wifiReportRepository.findById(id);
-        if (result.isEmpty()){
+
+    public String updateWifiReports(UUID id, WifiReport wifiReport) {
+
+        Optional<WifiReport> result = wifiReportRepository.findById(id);
+        if (result.isEmpty()) {
             return "data with this id is not available";
 
-        }else {
+        } else {
             WifiReport wifiRepo = result.get();
-    
+
             wifiRepo.setDescription(wifiReport.getDescription());
             wifiRepo.setReportDate(wifiReport.getReportDate());
             wifiRepo.setLocation(wifiReport.getLocation());
-             wifiReportRepository.save(wifiRepo);
+            wifiReportRepository.save(wifiRepo);
             return "data updated successfully";
-            }
-        
         }
 
-        public List<WifiReport> wifiReports(ReportStatus status){
-            List<WifiReport> wifi = wifiReportRepository.findByStatusOrderByReportDateAsc(status);
-           return wifi;
+    }
+
+    public List<WifiReport> wifiReports(ReportStatus status) {
+        List<WifiReport> wifi = wifiReportRepository.findByStatusOrderByReportDateAsc(status);
+        return wifi;
+    }
+
+    public List<WifiReport> wifiRepo(LocalDate start, LocalDate end) {
+        List<WifiReport> reports = wifiReportRepository.findByReportDateBetweenOrderByReportDateAsc(start, end);
+        return reports;
+    }
+
+    public String op(UUID id, ReportStatus status) {
+        Optional<WifiReport> w = wifiReportRepository.findById(id);
+        if (w.get().getStatus().equals(ReportStatus.OPEN)
+                && !(status.equals(ReportStatus.IN_PROGRESS) || status.equals(ReportStatus.DISMISSED))) {
+            return "Cannot change status from " + w.get().getStatus() + " to " + status;
+        } else if (w.get().getStatus().equals(ReportStatus.IN_PROGRESS)
+                && !(status.equals(ReportStatus.RESOLVED) || status.equals(ReportStatus.DISMISSED))) {
+            return "Cannot change status from " + w.get().getStatus() + " to " + status;
+        } else if (w.get().getStatus().equals(ReportStatus.RESOLVED)
+                || w.get().getStatus().equals(ReportStatus.DISMISSED)) {
+            return "Cannot change status from " + w.get().getStatus() + " to " + status;
+
+        } else {
+            w.get().setStatus(status);
+            wifiReportRepository.save(w.get());
+            return "Wifi report status updated successfylly";
         }
 
-         public List<WifiReport> wifiRepo(LocalDate start,LocalDate end){
-            List<WifiReport> reports = wifiReportRepository.findByReportDateBetweenOrderByReportDateAsc(start,end);
-           return reports;
-        }
+    }
 }
