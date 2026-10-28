@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import campus.connect.backend.domain.Student;
+
+import campus.connect.backend.domain.WifiReport;
 import campus.connect.backend.service.StudentService;
 
 @RestController 
@@ -59,6 +61,11 @@ public class StudentController {
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
+    @GetMapping (value = "/of-technician/{technicianId}" , produces = MediaType.APPLICATION_JSON_VALUE)
+     public ResponseEntity<?> findStude(@PathVariable UUID technicianId ){
+        List<Student> wifi = studentService.wif(technicianId);
+        return new ResponseEntity<>(wifi, HttpStatus.OK);
+    }
 
     
 

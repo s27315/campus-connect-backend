@@ -59,6 +59,11 @@ public class BuildingService {
         
         }
 
+         public List<Building> bu(){
+        List<Building> build = buildingRepository.findFreeBuildings();
+        return build;
+        }
+
 
 
 

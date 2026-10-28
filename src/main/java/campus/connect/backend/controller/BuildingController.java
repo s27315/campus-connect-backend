@@ -48,5 +48,10 @@ public class BuildingController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+      @GetMapping (value = "/free" , produces = MediaType.APPLICATION_JSON_VALUE)
+     public ResponseEntity<?> findBuild( ){
+        List<Building> bu = buildingService.bu();
+        return new ResponseEntity<>(bu, HttpStatus.OK);
+    }
 
 }

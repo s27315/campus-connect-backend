@@ -1,4 +1,4 @@
-package campus.connect.backend.service;
+    package campus.connect.backend.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 
 import campus.connect.backend.domain.Student;
+import campus.connect.backend.domain.Technician;
+import campus.connect.backend.domain.WifiReport;
 import campus.connect.backend.repository.StudentRepository;
 
 @Service 
@@ -67,7 +69,14 @@ public class StudentService {
             return stud;
         }
 
-        
+        public List<Student> wif(UUID technicianId){
+            Technician newtechnic = new Technician();
+            newtechnic.setId(technicianId);
+            List<Student> wi = studentRepository.wifi(newtechnic);
+            return wi;
+        }
+
+
 
 
 

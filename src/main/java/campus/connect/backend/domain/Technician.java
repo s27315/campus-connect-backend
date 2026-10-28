@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 
@@ -53,6 +52,7 @@ public class Technician {
         this.id = id;
     }
 
+
     public String getFirstName() {
         return firstName;
     }
@@ -87,6 +87,7 @@ public class Technician {
     public void setIssueTypes(List<IssueType> issueTypes){
         this.issueTypes = issueTypes;
     }
+    
     
     
 }

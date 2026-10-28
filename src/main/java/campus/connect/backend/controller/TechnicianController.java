@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import campus.connect.backend.domain.Technician;
@@ -52,6 +53,12 @@ public class TechnicianController {
       public ResponseEntity<?> updateTechnician(@PathVariable UUID id, @RequestBody Technician technician){
         String result = technicianService.updateTechnician(id, technician);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping (value = "/by-issue-type" , produces = MediaType.APPLICATION_JSON_VALUE)
+     public ResponseEntity<?> findIsueType(@RequestParam ("name") String name ){
+        List<Technician> techn = technicianService.techn(name);
+        return new ResponseEntity<>(techn, HttpStatus.OK);
     }
 
 

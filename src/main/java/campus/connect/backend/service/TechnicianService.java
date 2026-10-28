@@ -57,9 +57,10 @@ public class TechnicianService {
             }
         
         }
-
-
-
-
+        public List<Technician> techn(String name){
+            List<Technician> tec = technicianRepository.tech(name);
+            return tec;
+        }
+       
     
 }

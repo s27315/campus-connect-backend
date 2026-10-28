@@ -55,4 +55,11 @@ public class IssueTypeService {
             }
         
         }
-}
+
+         public List<IssueType> iss( ){
+            List<IssueType> typ = issueTypeRepository.issue();
+            return typ;
+        }
+
+
+    }
