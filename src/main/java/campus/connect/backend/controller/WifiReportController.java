@@ -41,7 +41,6 @@ public class WifiReportController {
         } else {
 
             return new ResponseEntity<>(result, HttpStatus.OK);
-
         }
     }
 
@@ -54,8 +53,13 @@ public class WifiReportController {
     @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteWifiReports(@PathVariable UUID id) {
         String result = wifiReportService.deleteWifiReports(id);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+         if (result.equals("That wifi report has fix notes,delete them first")) {
+            return new ResponseEntity<>(result, HttpStatus.valueOf(409));
 
+        } else{
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+        }
     }
 
     @PutMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

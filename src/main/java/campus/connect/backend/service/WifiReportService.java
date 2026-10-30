@@ -10,12 +10,15 @@ import org.springframework.stereotype.Service;
 
 import campus.connect.backend.domain.ReportStatus;
 import campus.connect.backend.domain.WifiReport;
+import campus.connect.backend.repository.FixNoteRepository;
 import campus.connect.backend.repository.WifiReportRepository;
 
 @Service
 public class WifiReportService {
     @Autowired
     private WifiReportRepository wifiReportRepository;
+    @Autowired
+    private FixNoteRepository fixNoteRepository;
 
     public String savingWifiReports(WifiReport wifiReport) {
         LocalDate nowLocalDate = LocalDate.now();
@@ -54,8 +57,13 @@ public class WifiReportService {
 
         } else {
 
-            wifiReportRepository.deleteById(id);
-            return "data deleted";
+            boolean sa = fixNoteRepository.existsByWifiReport(result.get());
+            if (sa) {
+                return "That wifi report has fix notes,delete them first";
+            } else {
+                wifiReportRepository.deleteById(id);
+                return "data deleted";
+            }
         }
     }
 
