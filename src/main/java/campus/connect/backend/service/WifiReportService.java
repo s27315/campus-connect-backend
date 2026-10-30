@@ -114,4 +114,13 @@ public class WifiReportService {
         }
 
     }
+    public List<Object[]> bi(){
+        List<Object[]> ba =wifiReportRepository.ob();
+        return ba;
+    }
+    public String se( UUID id,LocalDate date){
+        int in = wifiReportRepository.dat(id,date);
+        return in + " wifi reports cancelled";
+
+    }
 }

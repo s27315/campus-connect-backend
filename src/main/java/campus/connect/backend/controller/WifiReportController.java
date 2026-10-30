@@ -85,4 +85,17 @@ public class WifiReportController {
         String wifiRe = wifiReportService.op(id, status);
         return new ResponseEntity<>(wifiRe, HttpStatus.OK);
     }
+
+
+    @GetMapping(value = "/stats/by-status", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> status() {
+        List<Object[]> wifiReports = wifiReportService.bi();
+        return new ResponseEntity<>(wifiReports, HttpStatus.OK);
+    }
+
+     @PatchMapping (value = "/cancel-day" , produces = MediaType.APPLICATION_JSON_VALUE)
+      public ResponseEntity<?> fin(@RequestParam("technicianId") UUID technicianId,@RequestParam ("date") LocalDate date ){
+        String wif = wifiReportService.se(technicianId, date);
+        return new ResponseEntity<>(wif, HttpStatus.OK);
+    }
 }
