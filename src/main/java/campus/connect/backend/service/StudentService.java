@@ -69,9 +69,8 @@ public class StudentService {
         }
 
         public List<Student> wif(UUID technicianId){
-            Technician newtechnic = new Technician();
-            newtechnic.setId(technicianId);
-            List<Student> wi = studentRepository.wifi(newtechnic);
+           
+            List<Student> wi = studentRepository.wifi(technicianId);
             return wi;
         }
 

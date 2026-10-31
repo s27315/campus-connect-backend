@@ -32,6 +32,9 @@ public interface WifiReportRepository extends JpaRepository<WifiReport, UUID> {
     @Query (value = "UPDATE WifiReport w SET w.status = 'DISMISSED' WHERE w.technician.id = :id AND w.reportDate = :date")
     int dat(@Param ("id") UUID id,@Param ("date") LocalDate date);
 
+    Long countByReportDate(LocalDate date); 
+    Long countByStatus(ReportStatus open);
+
 
 
 }

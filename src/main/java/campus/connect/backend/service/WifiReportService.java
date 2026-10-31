@@ -5,7 +5,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import campus.connect.backend.domain.ReportStatus;
@@ -122,5 +128,14 @@ public class WifiReportService {
         int in = wifiReportRepository.dat(id,date);
         return in + " wifi reports cancelled";
 
+    }
+    public Page<WifiReport> fin(int page, int size,String sort){
+        String[] muwazi = sort.split(",");
+        String twaiver = muwazi[0];
+        String basuiru = muwazi[1];
+        Direction summaya = basuiru.equals("desc") ? Direction.DESC : Direction.ASC;  
+        Pageable nadia = PageRequest.of(page, size, Sort.by(summaya, twaiver));
+         Page<WifiReport> amani = wifiReportRepository.findAll(nadia);
+         return amani;
     }
 }

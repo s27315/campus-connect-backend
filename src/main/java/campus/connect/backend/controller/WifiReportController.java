@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -97,5 +98,11 @@ public class WifiReportController {
       public ResponseEntity<?> fin(@RequestParam("technicianId") UUID technicianId,@RequestParam ("date") LocalDate date ){
         String wif = wifiReportService.se(technicianId, date);
         return new ResponseEntity<>(wif, HttpStatus.OK);
+    }
+    
+    @GetMapping(value = "/page", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> all(@RequestParam ("page") int page ,@RequestParam ("size") int size, @RequestParam ("sort") String sort) {
+        Page<WifiReport> data = wifiReportService.fin(page, size, sort);
+        return new ResponseEntity<>(data, HttpStatus.OK);
     }
 }
